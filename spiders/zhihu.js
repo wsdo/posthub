@@ -12,8 +12,9 @@ class ZhihuSpider extends BaseSpider {
     }
 
     // 内容
-    const content = this.article.content + `\n\n> 本篇文章由一文多发平台[ArtiPub](https://github.com/crawlab-team/artipub)自动发布`
-
+    // const content = this.article.content + `\n\n> 本篇文章由一文多发平台[ArtiPub](https://github.com/crawlab-team/artipub)自动发布`
+    const content = this.article.content + `\n\n> 作者博客 [https://shudong.wang](https://shudong.wang)
+    \n\n![2019-10-21-19-20-20](http://s.shudong.wang/2019-10-21-19-20-20.png)`
     // 写入临时markdown文件
     const mdPath = path.join(dirPath, `${this.article._id.toString()}.md`)
     await fs.writeFileSync(mdPath, content)

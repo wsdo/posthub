@@ -2,7 +2,8 @@ const BaseSpider = require('./base')
 
 class ToutiaoSpider extends BaseSpider {
   async inputContent(article, editorSel) {
-    const footerContent = `<br><b>本篇文章由一文多发平台ArtiPub自动发布</b>. https://github.com/crawlab-team/artipub`
+    const footerContent = `<br><b><a href="https://shudong.wang" target="_blank">作者博客</a><br>
+      ![2019-10-21-19-20-20](http://s.shudong.wang/2019-10-21-19-20-20.png)</b>`
     const content = article.contentHtml + footerContent
     const el = document.querySelector(editorSel.content)
     el.focus()

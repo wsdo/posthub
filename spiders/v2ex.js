@@ -3,7 +3,8 @@ const constants = require('../constants')
 
 class V2exSpider extends BaseSpider {
   async inputContent(article, editorSel) {
-    const footerContent = `\n\n> 本篇文章由一文多发平台[ArtiPub](https://github.com/crawlab-team/artipub)自动发布`
+    const footerContent = `\n\n> 作者博客 [https://shudong.wang](https://shudong.wang)
+    \n\n![2019-10-21-19-20-20](http://s.shudong.wang/2019-10-21-19-20-20.png)`
     const content = article.content + footerContent
     editor.setValue(content)
   }
