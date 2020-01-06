@@ -1,30 +1,32 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\marvzhang\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install --registry=https://registry.npm.taobao.org
+  /Users/stark/.nvm/versions/node/v10.16.3/bin/node /Users/stark/.yarn/bin/yarn.js
 
 PATH: 
-  C:\Users\marvzhang\AppData\Local\Continuum\anaconda3;C:\Users\marvzhang\AppData\Local\Continuum\anaconda3\Library\mingw-w64\bin;C:\Users\marvzhang\AppData\Local\Continuum\anaconda3\Library\usr\bin;C:\Users\marvzhang\AppData\Local\Continuum\anaconda3\Library\bin;C:\Users\marvzhang\AppData\Local\Continuum\anaconda3\Scripts;C:\Users\marvzhang\AppData\Local\Continuum\anaconda3\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\ManagementStudio\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\nginx-1.15.0;C:\Users\marvzhang\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\nvm;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Redis;C:\Program Files\MongoDB\Server\4.0\bin;C:\Users\marvzhang\AppData\Local\Continuum\anaconda3;C:\Program Files\dotnet\;C:\Users\marvzhang\AppData\Local\Microsoft\WindowsApps;C:\Users\marvzhang\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\marvzhang\AppData\Roaming\npm;C:\Users\marvzhang\.dotnet\tools
+  /usr/local/opt/php@7.2/bin:/usr/local/opt/mysql@5.7/bin:/Users/stark/.yarn/bin:/Users/stark/.config/yarn/global/node_modules/.bin:/Users/stark/.nvm/versions/node/v10.16.3/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Apple/bin:/usr/local/go/bin
 
 Yarn version: 
-  1.13.0
+  1.17.3
 
 Node version: 
-  8.12.0
+  10.16.3
 
 Platform: 
-  win32 x64
+  darwin x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/antd/download/antd-3.23.2.tgz?cache=0&sync_timestamp=1567770307698&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fantd%2Fdownload%2Fantd-3.23.2.tgz: unexpected end of file
-      at Gunzip.zlibOnError (zlib.js:153:15)
+  Error: EINVAL: invalid argument, unlink '/Users/stark/project/pushhub/node_modules/cli-table3/node_modules/colors'
 
 npm manifest: 
   {
     "name": "artipub",
-    "version": "0.1.0",
+    "version": "0.1.4",
     "description": "Article publishing platform that automatically distributes your articles to various media channels",
     "main": "index.js",
     "scripts": {
+      "start": "node cli.js start",
       "start:frontend": "umi dev",
+      "start:backend": "node server.js",
+      "build": "umi build",
       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "bin": {
@@ -50,33 +52,35 @@ npm manifest:
     },
     "homepage": "https://github.com/crawlab-team/artipub#readme",
     "dependencies": {
-      "async-lock": "^1.2.2",
-      "body-parser": "^1.19.0",
-      "clipboardy": "^2.1.0",
-      "cors": "^2.8.5",
-      "cron": "^1.7.1",
-      "express": "^4.17.1",
-      "log4js": "^5.1.0",
-      "mongoose": "^5.6.12",
-      "morgan": "^1.9.1",
-      "puppeteer-chromium-resolver": "^2.0.1",
-      "showdown": "^1.9.0",
       "@ant-design/pro-layout": "^4.5.9",
       "@antv/data-set": "^0.10.2",
       "@types/codemirror": "0.0.76",
       "@types/showdown": "^1.9.3",
       "antd": "^3.20.0",
+      "async-lock": "^1.2.2",
+      "body-parser": "^1.19.0",
+      "caporal": "^1.3.0",
+      "cheerio": "^1.0.0-rc.3",
       "classnames": "^2.2.6",
+      "clipboardy": "^2.1.0",
       "codemirror": "^5.48.2",
+      "cors": "^2.8.5",
+      "cron": "^1.7.1",
       "dva": "^2.4.1",
+      "express": "^4.17.1",
       "github-markdown-css": "^3.0.1",
       "hash.js": "^1.1.7",
       "lodash": "^4.17.11",
+      "log4js": "^5.1.0",
+      "markdown-it": "^10.0.0",
       "moment": "^2.24.0",
+      "mongoose": "^5.6.12",
+      "morgan": "^1.9.1",
       "numeral": "^2.0.6",
       "nzh": "^1.0.4",
       "omit.js": "^1.0.2",
       "path-to-regexp": "^3.0.0",
+      "puppeteer-chromium-resolver": "^2.0.1",
       "qs": "^6.7.0",
       "react": "^16.8.6",
       "react-ace": "^7.0.2",
@@ -84,8 +88,11 @@ npm manifest:
       "react-copy-to-clipboard": "^5.0.1",
       "react-document-title": "^2.0.3",
       "react-dom": "^16.8.6",
+      "react-markdown-editor-lite": "^0.4.3",
       "react-showdown": "^1.6.0",
       "redux": "^4.0.1",
+      "request": "^2.88.0",
+      "request-promise-native": "^1.0.7",
       "showdown": "^1.9.0",
       "umi": "^2.8.7",
       "umi-plugin-pro-block": "^1.3.2",

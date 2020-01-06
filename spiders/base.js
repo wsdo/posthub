@@ -1,5 +1,5 @@
 const PCR = require('puppeteer-chromium-resolver')
-const ObjectId = require('bson').ObjectId
+const { ObjectId } = require('bson')
 const models = require('../models')
 const constants = require('../constants')
 const config = require('./config')
@@ -10,7 +10,12 @@ class BaseSpider {
   constructor(taskId, platformId) {
     // 任务ID
     this.taskId = taskId
+    this.footCentent = `
 
+    <br><b><a href="https://shudong.wang" target="_blank">作者博客</a><br>
+
+    ![2019-10-21-19-20-20](http://s.shudong.wang/2019-10-21-19-20-20.png)
+  `
     // 平台ID
     this.platformId = platformId
   }
@@ -41,27 +46,27 @@ class BaseSpider {
       folderName: '.chromium-browser-snapshots',
       hosts: ['https://storage.googleapis.com', 'https://npm.taobao.org/mirrors'],
       retry: 3,
-      silent: false
+      silent: false,
     })
 
     // 是否开启chrome浏览器调试
-    const enableChromeDebugEnv = await models.Environment.findOne({ _id: constants.environment.ENABLE_CHROME_DEBUG })
+    const enableChromeDebugEnv = await models.Environment.findOne({
+      _id: constants.environment.ENABLE_CHROME_DEBUG,
+    })
     const enableChromeDebug = enableChromeDebugEnv.value
 
     // 浏览器
     this.browser = await this.pcr.puppeteer.launch({
       executablePath: this.pcr.executablePath,
-      //设置超时时间
+      // 设置超时时间
       timeout: 120000,
-      //如果是访问https页面 此属性会忽略https错误
+      // 如果是访问https页面 此属性会忽略https错误
       ignoreHTTPSErrors: true,
       // 打开开发者工具, 当此值为true时, headless总为false
       devtools: false,
       // 关闭headless模式, 不会打开浏览器
       headless: enableChromeDebug !== 'Y',
-      args: [
-        '--no-sandbox',
-      ]
+      args: ['--no-sandbox'],
     })
 
     // 页面
@@ -92,14 +97,13 @@ class BaseSpider {
     // 隐藏navigator
     await this.page.evaluate(() => {
       Object.defineProperty(navigator, 'webdriver', {
-        get: () => false
+        get: () => false,
       })
     })
 
     // 脚注内容
     this.footerContent = {
-      richText: `<br><b><a href="https://shudong.wang" target="_blank">作者博客</a><br>
-      ![2019-10-21-19-20-20](http://s.shudong.wang/2019-10-21-19-20-20.png)</b>`,
+      richText: this.footCentent,
     }
   }
 
@@ -114,27 +118,27 @@ class BaseSpider {
       folderName: '.chromium-browser-snapshots',
       hosts: ['https://storage.googleapis.com', 'https://npm.taobao.org/mirrors'],
       retry: 3,
-      silent: false
+      silent: false,
     })
 
     // 是否开启chrome浏览器调试
-    const enableChromeDebugEnv = await models.Environment.findOne({ _id: constants.environment.ENABLE_CHROME_DEBUG })
+    const enableChromeDebugEnv = await models.Environment.findOne({
+      _id: constants.environment.ENABLE_CHROME_DEBUG,
+    })
     const enableChromeDebug = enableChromeDebugEnv.value
 
     // 浏览器
     this.browser = await this.pcr.puppeteer.launch({
       executablePath: this.pcr.executablePath,
-      //设置超时时间
+      // 设置超时时间
       timeout: 120000,
-      //如果是访问https页面 此属性会忽略https错误
+      // 如果是访问https页面 此属性会忽略https错误
       ignoreHTTPSErrors: true,
       // 打开开发者工具, 当此值为true时, headless总为false
       devtools: false,
       // 关闭headless模式, 不会打开浏览器
       headless: enableChromeDebug !== 'Y',
-      args: [
-        '--no-sandbox',
-      ]
+      args: ['--no-sandbox'],
     })
 
     // 页面
@@ -241,8 +245,7 @@ class BaseSpider {
    * 输入文章脚注
    */
   async inputFooter(article, editorSel) {
-    const footerContent = `\n\n> <br><b><a href="https://shudong.wang" target="_blank">作者博客</a><br>
-      ![2019-10-21-19-20-20](http://s.shudong.wang/2019-10-21-19-20-20.png)</b>`
+    const footerContent = this.footCentent
     const el = document.querySelector(editorSel.content)
     el.focus()
     document.execCommand('insertText', false, footerContent)
@@ -252,7 +255,7 @@ class BaseSpider {
    * 输入编辑器
    */
   async inputEditor() {
-    logger.info(`input editor title and content`)
+    logger.info('input editor title and content')
     // 输入标题
     await this.page.evaluate(this.inputTitle, this.article, this.editorSel, this.task)
     await this.page.waitFor(3000)
@@ -283,7 +286,7 @@ class BaseSpider {
    * 发布文章
    */
   async publish() {
-    logger.info(`publishing article`)
+    logger.info('publishing article')
     // 发布文章
     const elPub = await this.page.$(this.editorSel.publish)
     await elPub.click()
@@ -389,13 +392,11 @@ class BaseSpider {
     await this.page.waitFor(5000)
 
     // 检查登陆状态
-    const text = await this.page.evaluate(() => {
-      return document.querySelector('body').innerText
-    })
+    const text = await this.page.evaluate(() => document.querySelector('body').innerText)
     if (this.platform.name === constants.platform.TOUTIAO) {
       this.platform.loggedIn = !!text.match('退出登录')
     } else if (this.platform.name === constants.platform.CSDN) {
-        this.platform.loggedIn = !!text.match('写博客')
+      this.platform.loggedIn = !!text.match('写博客')
     } else if (this.platform.name === constants.platform.CNBLOGS) {
       this.platform.loggedIn = !!text.match('我的博客')
     } else {
